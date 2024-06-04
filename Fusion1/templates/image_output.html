@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processed Images</title>
+</head>
+<body>
+    <h1>Processed Images</h1>
+    {% for image in images %}
+        <img src="data:image/png;base64,{{ image }}" alt="Processed image">
+    {% endfor %}
+</body>
+</html>
