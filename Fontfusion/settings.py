@@ -25,11 +25,9 @@ SECRET_KEY = 'django-insecure-3$qwtdrdb)@y_nqg!0iawy8ucsaq)@o&#2sw$q88vk%!ca_%ap
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'e100-2401-4900-1c2d-a7e9-e4b5-93a7-7b32-1b07.ngrok-free.app',
-]
-
-
+ALLOWED_HOSTS = ['https://e100-2401-4900-1c2d-a7e9-e4b5-93a7-7b32-1b07.ngrok-free.app','*']
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Fusion1',
     'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +51,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'Fontfusion.urls'
@@ -83,6 +85,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Password validation

@@ -5,9 +5,12 @@
 </head>
 <body>
     <h1>Upload Images</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post">
         {% csrf_token %}
-        <input type="file" name="images" multiple>
+        <label for="image1">Image 1:</label>
+        <input type="text" id="image1" name="image1">
+        <label for="image2">Image 2:</label>
+        <input type="text" id="image2" name="image2">
         <button type="submit">Upload and Process</button>
     </form>
 </body>
