@@ -1,27 +1,46 @@
-import requests
+from PIL import Image
 
-# URL of the image_process_api endpoint
-url = ' https://e100-2401-4900-1c2d-a7e9-e4b5-93a7-7b32-1b07.ngrok-free.app/image_process_api/'
+def place_letters_on_template(template_path, letters_folder, output_path):
+    # Load the template
+    template = Image.open(template_path)
 
-# Path to the image files you want to send
-image1_path = '10022.png'
-image2_path = '10001.png'
+    # Dimensions of each cell (you might need to adjust these)
+    cell_width, cell_height = 140, 140  # Example dimensions
 
-# Prepare the files to be sent in the POST request
-files = {
-    'image1': open(image1_path, 'rb'),
-    'image2': open(image2_path, 'rb')
-}
+    # Starting positions of the first cell (you might need to adjust these)
+    start_x, start_y = 290, 290  # Example starting positions
 
-# Send a POST request to the API endpoint
-response = requests.post(url, files=files)
+    # Load and place each letter image
+    for i in range(26):  # Assuming only uppercase letters A-Z
+        char = chr(ord('A') + i)
+        image_filename = f"char_{i}.png"  # Construct filename based on index
 
-# Check the response from the API
-if response.status_code == 200:
-    # Request was successful
-    output_image_data = response.json()['output_image']
-    # Process the output_image_data as needed
-else:
-    # Request failed
-    error_message = response.json()['error']
-    print(f'Error: {error_message}')
+        try:
+            # Load the letter image
+            letter_image = Image.open(f"{letters_folder}/{image_filename}")
+            letter_image = letter_image.resize((cell_width, cell_height))
+
+            # Calculate position based on the custom layout
+            if i < 4:  # First line (A, B, C, D)
+                x = start_x + (i % 4) * (cell_width )
+                y = start_y
+            elif i < 12:  # Second line (E, F, G, H, I, J, K, L)
+                x = start_x-290 + ((i - 4) % 8) * (cell_width)
+                y = start_y + (cell_height + 40)
+            elif i < 20:  # Third line (M, N, O, P, Q, R, S, T)
+                x = start_x-290 + ((i - 12) % 8) * (cell_width )
+                y = start_y + 2 * (cell_height + 40)
+            else:  # Fourth line (U, V, W, X, Y, Z)
+                x = start_x-290 + ((i - 20) % 6) * (cell_width )
+                y = start_y + 3 * (cell_height + 40)
+
+            # Paste the letter image onto the template
+            template.paste(letter_image, (x, y))
+        except FileNotFoundError:
+            print(f"No image for {char}")
+
+    # Save the modified template
+    template.save(output_path)
+
+# Example usage
+place_letters_on_template("WhatsApp Image 2024-06-18 at 12.56.32 PM.jpeg", "PngNew", "output_template.png")
