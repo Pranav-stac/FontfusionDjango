@@ -25,13 +25,13 @@ def place_letters_on_template(template_path, letters_folder, output_path):
                 x = start_x + (i % 4) * (cell_width )
                 y = start_y
             elif i < 12:  # Second line (E, F, G, H, I, J, K, L)
-                x = start_x-290 + ((i - 4) % 8) * (cell_width)
+                x = start_x-290 + ((i - 4) % 8) * (cell_width+3)
                 y = start_y + (cell_height + 40)
             elif i < 20:  # Third line (M, N, O, P, Q, R, S, T)
-                x = start_x-290 + ((i - 12) % 8) * (cell_width )
+                x = start_x-290 + ((i - 12) % 8) * (cell_width +3)
                 y = start_y + 2 * (cell_height + 40)
             else:  # Fourth line (U, V, W, X, Y, Z)
-                x = start_x-290 + ((i - 20) % 6) * (cell_width )
+                x = start_x-290 + ((i - 20) % 6) * (cell_width +3)
                 y = start_y + 3 * (cell_height + 40)
 
             # Paste the letter image onto the template
