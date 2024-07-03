@@ -88,6 +88,8 @@ def handle_uploaded_image(image_file):
     return img
 
 
+def index(request):
+    return render(request, 'index.html')
 
 
 
@@ -711,15 +713,14 @@ def decode_image(request):
                 image = image.resize((64, 64))
                 image.save(os.path.join(directory, f'char_{idx}.png'), 'PNG')
 
-            # Corrected the use of raw strings for Windows paths
+            # Using relative paths
             place_images_on_template(
-                template_path=r'C:\Users\ADMIN\Desktop\Projects\Font-FusionBackend\FontFusionBackend\FontFusion\WhatsApp Image 2024-06-18 at 12.56.32 PM.jpeg',
-                images_folder=r'C:\Users\ADMIN\Desktop\Projects\Font-FusionBackend\FontFusionBackend\FontFusion\GenTTF',
-                output_path=r'C:\Users\ADMIN\Desktop\Projects\Font-FusionBackend\FontFusionBackend\Fusion1\final_template.png',
+                template_path='../FontFusion/WhatsApp Image 2024-06-18 at 12.56.32 PM.jpeg',
+                images_folder='../FontFusion/GenTTF',
+                output_path='final_template.png',
                 num_images=26,  # Assuming 26 images
-                prefix="char_"  # Assuming files are named like 'containsdbdgg0.png', 'containsdbdgg1.png', etc.
+                prefix="char_"  # Assuming files are named like 'char_0.png', 'char_1.png', etc.
             )
-
             return JsonResponse({'message': f'{len(images)} images processed and saved successfully'}, status=200)
         except Exception as e:
             print("Error:", str(e))
@@ -769,7 +770,7 @@ def calculate_position(index, start_x, start_y, cell_width, cell_height):
 
 def handwritten(request):
     user_id = request.user.id
-    template_path = r'C:\Users\ADMIN\Desktop\Projects\Font-FusionBackend\FontFusionBackend\Fusion1\final_template.png'
+    template_path = os.path.join('Fusion1', 'final_template.png')
     print(f"Template path: {template_path}")
 
     generated_font_path = download_font(template_path)
